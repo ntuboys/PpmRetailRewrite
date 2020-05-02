@@ -10,49 +10,6 @@ import { Formik } from 'formik';
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
-<<<<<<< HEAD
-function OpenShop({ route, navigation }) {
-  const [isInvVisible, setInvVisibility] = useState(false);
-  function toggleInvVis() {
-    setInvVisibility(!isInvVisible);
-  }
-  const { shop, auth } = route.params;
-
-  console.log('=========shop==============')
-  console.log(shop);
-
-  if (shop) {
-    navigation.setOptions({ title: shop.name });
-  } else {
-    // show error
-    navigation.goBack();
-  }
-  return (
-    <View style={{ padding: 10 }}>
-      <Text>ID: {shop._id}</Text>
-      <Text>Name: {shop.name}</Text>
-      <Text>Address: {shop.address}</Text>
-      <Text>Owner: {shop.ownerId}</Text>
-      <View>
-        {isInvVisible ? (
-          <View>
-            {shop.stock.map((item, i) => (
-              <Text key={i}>{item.name} x{item.qnt} (ID: {item._id}, Price: {item.price})</Text>
-            ))}
-            <Button title="Hide inventory" onPress={toggleInvVis} />
-            <Button title="Add to inventory" onPress={() => {
-              navigation.navigate('NewItem', { shop: shop, auth: auth })
-            }} />
-          </View>) : (
-            <Button title="Show inventory" onPress={toggleInvVis} />
-          )}
-      </View>
-    </View>
-  );
-}
-
-=======
->>>>>>> d3ae340763edc78f44c8ecc9767809d232eac431
 function ShopList({ navigation, route }) {
   const { auth } = route.params;
   const [state, dispatch] = React.useReducer((prevState, action) => {
@@ -83,11 +40,7 @@ function ShopList({ navigation, route }) {
       redirect: 'follow'
     };
 
-<<<<<<< HEAD
-    fetch("http://13.77.96.221:4000/shop/", requestOptions)
-=======
     fetch('http://13.77.96.221:4000/all/inventory/', requestOptions)
->>>>>>> d3ae340763edc78f44c8ecc9767809d232eac431
       .then(response => response.text())
       .then(result => {
         result = JSON.parse(result);
@@ -167,11 +120,7 @@ function BuyItem({ route, navigation }) {
       redirect: 'follow'
     };
 
-<<<<<<< HEAD
-    fetch("http://13.77.96.221:4000/shop/create", requestOptions)
-=======
     fetch("http://13.77.96.221:4000/buy", requestOptions)
->>>>>>> d3ae340763edc78f44c8ecc9767809d232eac431
       .then(response => response.text())
       .then(result => console.log(result))
       .catch(error => console.log('error', error));
@@ -245,93 +194,6 @@ function BuyItem({ route, navigation }) {
   )
 }
 
-<<<<<<< HEAD
-function ShopsHome({ navigation }) {
-  return (
-    <UserContext.Consumer>
-      {value => navigation.navigate('ShopList', { auth: value })
-      }
-    </UserContext.Consumer>
-  );
-}
-
-function NewItem({ navigation, route }) {
-  const { shop, auth } = route.params;
-  console.log(shop);
-  return (<Formik
-    initialValues={{ name: null, price: null, qnt: null, description: null }}
-    onSubmit={(values) => {
-      console.log('trying to submit: ')
-      console.log(values);
-
-      var myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
-      myHeaders.append("token", auth.userToken);
-      myHeaders.append("username", auth.userUsername);
-      var requestOptions = {
-        method: 'POST',
-        headers: myHeaders,
-        body: JSON.stringify(values),
-        redirect: 'follow'
-      };
-
-      fetch(`http://13.77.96.221:4000/shop/${shop._id}/inventory/add`, requestOptions)
-        .then(response => response.text())
-        .then(result => console.log(result))
-        .catch(error => console.log('error', error));
-    }}
-  >
-    {({ handleChange, handleBlur, handleSubmit, values }) => (
-      <View>
-        <View style={{ flexDirection: 'row' }}>
-          <Text>name</Text>
-          <TextInput
-            onChangeText={handleChange('name')}
-            onBlur={handleBlur('name')}
-            value={values.name}
-            style={{ width: 200, backgroundColor: 'white' }}
-            placeholder="arek"
-          />
-        </View>
-        <View style={{ flexDirection: 'row' }}>
-          <Text>price</Text>
-          <TextInput
-            onChangeText={handleChange('price')}
-            onBlur={handleBlur('price')}
-            value={values.price}
-            style={{ width: 200, backgroundColor: 'white' }}
-            placeholder="pass"
-          />
-        </View>
-        <View style={{ flexDirection: 'row' }}>
-          <Text>qnt</Text>
-          <TextInput
-            onChangeText={handleChange('qnt')}
-            onBlur={handleBlur('qnt')}
-            value={values.qnt}
-            style={{ width: 200, backgroundColor: 'white' }}
-            placeholder="pass"
-          />
-        </View>
-        <View style={{ flexDirection: 'row' }}>
-          <Text>desc</Text>
-          <TextInput
-            onChangeText={handleChange('description')}
-            onBlur={handleBlur('description')}
-            value={values.description}
-            style={{ width: 200, backgroundColor: 'white' }}
-            placeholder="pass"
-          />
-        </View>
-        <Button onPress={handleSubmit} title="Submit" />
-      </View>
-    )}
-  </Formik>
-  )
-}
-
-=======
->>>>>>> d3ae340763edc78f44c8ecc9767809d232eac431
 export default function ShopsRoot({ navigation }) {
   function handleMenuButtonPress() {
     navigation.toggleDrawer();
